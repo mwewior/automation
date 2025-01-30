@@ -1,0 +1,4 @@
+S = load('odp_skokowa.mat');
+s = S.y(110:end)/1000;
+
+D  = 50

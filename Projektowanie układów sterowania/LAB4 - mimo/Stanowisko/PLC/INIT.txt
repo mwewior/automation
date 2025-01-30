@@ -1,0 +1,43 @@
+okres_probkowania := 0.1;
+stala_czasowa := 10.0;
+K_p_proces := 25.0;
+u1_k := 2700; //wstepna wartosc sterowania
+u2_k := 3200;
+
+//Inicjalizacja MODBUS
+Pomiar_MODBUS := 0;
+Zapis_MODBUS := 0;
+
+MOV(TRUE, K16, Slave_adres);
+MOV(TRUE, K4, Function_code); //4-pomiar, 3-sterowanie
+MOV(TRUE, K0, Modbus_adres); //zaczynamy liczyc od 0
+MOV(TRUE, K7, Device_count); //7 pomiarow, 6 sterowan
+
+
+WENT1 := 500;
+WENT2 := 500;
+GRZALA1 := 2700;
+GRZALA2 := 3200;
+TEMP1 := 0;
+TEMP3 := 0;
+T1_ZAD := 0;
+T3_ZAD := 0;
+
+Err1_k := 0;
+Err1_k_1 := 0;
+Err1_k_2 := 0;
+Err2_k := 0;
+Err2_k_1 := 0;
+Err2_k_2 := 0;
+
+
+//MOV(TRUE, T1_ZAD, GRZALA1);
+//MOV(TRUE, T3_ZAD, GRZALA2);
+
+
+//Ustawienie poczatkowe wyjsc procesu
+ZRST(TRUE, D110, D120);
+
+SD414 := 2; //timer 2n, ktorego odliczenie odczytujemy z SM414 // ustawiony okres 4 sekundy
+
+EI(TRUE);

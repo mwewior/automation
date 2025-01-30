@@ -1,0 +1,91 @@
+//Opoznienie po wlaczeniu sterownika - zezwolenie komunikacji modbus ze stanowiskiem
+
+
+OUT_T(TRUE,TC0,K20);
+
+SET(LDP(TRUE,TS0),Pozwolenie_pomiar_MODBUS);
+SET(LDP(TRUE,TS0),Pozwolenie_zapis_MODBUS);
+/*
+//float(real) przykladowe operacje
+licznik := 0;
+liczba1 := 123.4;
+wynik   := 0.0;
+
+NULL_STATE := 0;
+IF NULL_STATE = 0 THEN
+	Stan_MAIN := 0;
+	NULL_STATE := 1;
+END_IF;
+
+//D110:=500;
+//D111 := 500;
+
+//petla FOR
+FOR  licznik := 1  TO  1000  BY  1  DO
+	 wynik := liczba1 * licbza2;
+END_FOR;
+
+
+TIM_MAIN(PT:= T#4s);
+TIM_SIDE(PT:= T#4s);
+CUR_TIM := TIM_SIDE.ET;
+pomiar := D100;
+
+
+
+
+
+
+// PID:
+
+
+
+
+/*
+CASE  Stan_MAIN  OF
+	// /*
+	0:
+		u_k := 32.0;
+		TIM_SIDE.IN := TRUE;
+		Stan_MAIN := 1;
+	
+	1:	
+		IF TIM_SIDE.Q THEN
+			
+			TIM_SIDE.IN := FALSE;
+			u_k := 3.0;
+			GRZALA1 := 5000;
+			GRZALA2 := 5000;
+			// TIM_MAIN.IN := FALSE;
+			Stan_MAIN := 2;		
+		END_IF;
+	
+	2:
+		TIM_SIDE.IN := TRUE;
+		Stan_MAIN := 3;	
+			
+	3:
+		IF TIM_SIDE.Q THEN
+			GRZALA1 := 2700;
+			GRZALA2 := 3200;
+			TIM_SIDE.IN := FALSE;
+			Stan_MAIN := 4;
+		END_IF;
+	
+	4:
+		TIM_SIDE.IN := TRUE;
+		Stan_MAIN := 5;
+		
+	5:
+		IF TIM_SIDE.Q THEN
+			u_k := 10.0;
+			TIM_SIDE.IN := FALSE;
+			Stan_MAIN := 6;		
+		END_IF;		
+
+	6:
+		Stan_MAIN := 0;
+		
+	// 	
+END_CASE;
+*/

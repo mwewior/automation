@@ -1,0 +1,72 @@
+// Sprawdzenie otwartego polaczenia
+SP_SOCCINF( SD10680.0 , 'U0' , K1 , Control_data_SOCCINF , Conn_info_SOCCINF );
+
+
+OUT(SD10680.0 AND SM414, Y17);
+
+IF AUTO_SEND AND LDP(TRUE, SM414) THEN
+//IF AUTO_SEND AND LDP(TRUE, SM412) THEN
+
+//Generacja tesktu do wyslania przez socket communication
+
+	text_temp := 'Y1=';
+
+	text_temp := CONCAT(text_temp,REAL_TO_STRING(TEMP1));
+
+	text_temp := CONCAT(text_temp,';Y2=');	
+	
+	text_temp := CONCAT(text_temp,REAL_TO_STRING(TEMP3));	
+	
+	text_temp := CONCAT(text_temp,';U1=');
+	
+	text_temp := CONCAT(text_temp,REAL_TO_STRING(GRZALA1));	
+
+	text_temp := CONCAT(text_temp,';U2=');
+		
+	text_temp := CONCAT(text_temp,REAL_TO_STRING(GRZALA2));	
+
+	text_temp := CONCAT(text_temp,';YZ1=');
+		
+	text_temp := CONCAT(text_temp, REAL_TO_STRING(T1_ZAD));	
+
+	text_temp := CONCAT(text_temp,';YZ2=');
+			
+	text_temp := CONCAT(text_temp, REAL_TO_STRING(T3_ZAD));
+	
+	text_temp := CONCAT(text_temp,';W1=');
+	
+	text_temp := CONCAT(text_temp, REAL_TO_STRING(WENT1));
+	
+	text_temp := CONCAT(text_temp,';W2=');
+	
+	text_temp := CONCAT(text_temp, REAL_TO_STRING(WENT2));
+
+	text_temp := CONCAT(text_temp,';$L');	
+
+	//Dlugosc tekstu
+	text_length := INT_TO_WORD( LEN(text_temp) );
+	
+	Trigger_Send := 1;
+	
+END_IF;
+
+IF SD10680.0 THEN
+	AUTO_SEND := TRUE;
+END_IF;
+
+// jezeli komunikacja zostala zerwana skasuj flagi wysylania
+IF LDF(TRUE, SD10680.0) THEN
+	AUTO_SEND := FALSE;
+	Trigger_Send := FALSE;
+END_IF;
+
+SP_SOCSND(AUTO_SEND AND LDP(TRUE, Trigger_Send) AND SD10680.0 , 'U0' , K1 , Control_data_SOCSND , text_length , M300 );
+
+IF M300 AND NOT M301 THEN
+	Trigger_Send := 0;
+END_IF;
+
+
+
+
+

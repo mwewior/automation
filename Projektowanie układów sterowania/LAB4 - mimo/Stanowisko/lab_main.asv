@@ -1,0 +1,50 @@
+D = 90;
+len = D;
+start = 5;
+nullS = zeros(2, 2);
+S = cell(len, 1);
+
+ws1 = load('odp_skokowa_g1_300.mat');
+
+
+ws2 = load('odp_skokowa_g2_300.mat');
+
+for k=start:D
+
+    p = k-start+1;
+
+    y1o1(p) = (ws1.y1(k) - ws1.y1(start))/300;
+    y2o1(p) = (ws1.y2(k) - ws1.y2(start))/300;
+
+    y1o2(p) = (ws2.y1(k) - ws2.y1(start))/300;
+    y2o2(p) = (ws2.y2(k) - ws2.y2(start))/300;
+
+%     S{p}(1, 1) = y1o1(k);
+%     S{p}(1, 2)
+    
+    S{p} = [
+        y1o1,   y1o2;
+        y2o1,   y2o2;
+    ];
+end
+
+for k=1:len-start+1
+
+    p = k;
+    S11(p) = S{k}(1, 1); 
+    S21(p) = S{k}(2, 1); 
+
+    S12(p) = S{k}(1, 2); 
+    S22(p) = S{k}(2, 2); 
+end
+
+subplot(2, 2, 1)
+stairs(S11); grid on; title("y_1(u_1)"); ylabel("y_1"); xlabel("k");
+subplot(2, 2, 2)
+stairs(S21); grid on; title("y_2(u_1)"); ylabel("y_2"); xlabel("k");
+
+subplot(2, 2, 3)
+stairs(S12); grid on; title("y_1(u_2)"); ylabel("y_1"); xlabel("k");
+subplot(2, 2, 4)
+stairs(S22); grid on; title("y_2(u_2)"); ylabel("y_2"); xlabel("k");
+

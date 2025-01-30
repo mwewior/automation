@@ -1,0 +1,31 @@
+SET(Pozwolenie_pomiar_MODBUS AND LDP(TRUE,SM413),Pomiar_MODBUS);
+IF(Pomiar_MODBUS) THEN
+	Function_code := 4;
+	Device_count := 7;
+	ADPRW( Pomiar_MODBUS AND NOT Zapis_MODBUS, Slave_adres , Function_code , Modbus_adres, Device_count , D100, M100);
+	IF(M101) THEN
+		RST(TRUE, Pomiar_MODBUS);
+		RST(TRUE, M101);
+		RST(TRUE, M100);
+	END_IF;
+END_IF;
+
+//od d100 pomiary (input register)
+// z d100 pomiary czytane do d110 ... to wentylatory grzalki
+//d110 wartosci przerzucane jednym rzutem do holdin registerow
+//wlaczac watcha i wstawiac d110, ustawic 500
+
+
+SET(Pozwolenie_zapis_MODBUS AND LDF(TRUE,SM413),Zapis_MODBUS);
+IF(Zapis_MODBUS) THEN
+	Function_code := 16;
+	Device_count := 6;
+	ADPRW( Zapis_MODBUS AND NOT Pomiar_MODBUS, Slave_adres , Function_code , Modbus_adres, Device_count , D110, M110);
+	IF(M111) THEN
+		RST(TRUE, Zapis_MODBUS);
+		RST(TRUE, M111);
+		RST(TRUE, M110);
+	END_IF;
+END_IF;
+
+
